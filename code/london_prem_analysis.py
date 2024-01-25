@@ -9,15 +9,15 @@ from datetime import date
 import creds
 
 # toggle to run relevant parts of the code
-refresh_game_urls = True
-refresh_data = True
-refresh_analysis = True
-validate_game_numbers = False
+refresh_game_urls = False
+refresh_data = False
+refresh_analysis = False
+validate_game_numbers = True
 
 # pandas display options
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.max_columns', 10)
-pd.set_option('display.width', 300)
+pd.set_option('display.width', 300)s
 
 # urls needed to read and write data
 login_url = r"https://secure.whostheumpire.com/db_admin/index.php?login=Y"
@@ -30,7 +30,7 @@ local_storage = r"/Users/milokite/Python/data/ones/"
 game_id_filename = "game_ids"
 raw_data = "thd_data"
 analysed_player_filename = "analysed_player_data"
-analysed_team_filename = "analysed_team_data"x
+analysed_team_filename = "analysed_team_data"
 league_id = '2D2C4D7E1C5A5E5B8D'
 today = date.today().strftime('%d-%m-%Y')
 
