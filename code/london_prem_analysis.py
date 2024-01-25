@@ -8,16 +8,19 @@ from datetime import date
 # contains your login details
 import creds
 
+if creds.email == 'your@email.com' or creds.password == 'your_password':
+        raise Exception(f'Update your username and password in the creds.py file')
+
 # toggle to run relevant parts of the code
-refresh_game_urls = False
-refresh_data = False
-refresh_analysis = False
+refresh_game_urls = True
+refresh_data = True
+refresh_analysis = True
 validate_game_numbers = True
 
 # pandas display options
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.max_columns', 10)
-pd.set_option('display.width', 300)s
+pd.set_option('display.width', 300)
 
 # urls needed to read and write data
 login_url = r"https://secure.whostheumpire.com/db_admin/index.php?login=Y"
@@ -26,7 +29,8 @@ fixture_view = r"https://secure.whostheumpire.com/db_admin/fixtures.php?function
 hockey_fixtures_url = r"https://hockeyfixtures.co.uk/league/view/240"
 
 # run configurations, replace with your username
-local_storage = r"/Users/milokite/Python/data/ones/"
+current_directory = os.getcwd()
+local_storage = current_directory + r"/data/ones/"
 game_id_filename = "game_ids"
 raw_data = "thd_data"
 analysed_player_filename = "analysed_player_data"
