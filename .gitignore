@@ -5,3 +5,4 @@ hockey_venv/
 code/config.py
 data/*
 credentials/*
+.DS_Store
