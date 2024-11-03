@@ -1,3 +1,11 @@
+# Apache Airflow and its Google provider
+apache-airflow
+apache-airflow-providers-google
+
+# Other dependencies
 requests
-pandas
-bs4
+pandas  # Use a compatible version of pandas
+beautifulsoup4 # bs4 is installed using this package name
+google-api-python-client  # Upgrade to a compatible version
+google-auth-httplib2
+google-auth-oauthlib
