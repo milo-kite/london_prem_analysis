@@ -9,3 +9,6 @@ beautifulsoup4 # bs4 is installed using this package name
 google-api-python-client  # Upgrade to a compatible version
 google-auth-httplib2
 google-auth-oauthlib
+black
+flake8
+pre-commit

@@ -99,12 +99,20 @@ Go to `config.py` and update:
 
 ### Virtual Environment
 
-1. Run `make create_venv` to create a virtual environment.
-2. Run `source hockey_venv/bin/activate` to activate the virtual environment.
+1. Install your virtual environment using `brew install pyenv-virtualenv` for macOS
+2. Add virtual environment to your shell by adding these lines to your shell:
+    - `export PATH="$HOME/.pyenv/bin:$PATH"`
+    - `eval "$(pyenv init --path)"`
+    - `eval "$(pyenv init -)"`
+    - `eval "$(pyenv virtualenv-init -)" `
+    followed by `source ~/.zshrc`
+3. Create your pyenv using `make pyenv`
+4. Activate your virtual environment using `pyenv activate ${VENV_NAME}`
 
 ### Requirements
 
 Run `make requirements` to install your requirements.
+Install your pre-commit hook using `pre-commit install`
 
 ### Airflow
 

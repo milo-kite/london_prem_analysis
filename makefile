@@ -1,16 +1,10 @@
 VENV_NAME = hockey_venv
 
-create_venv:
-	python3 -m venv $(VENV_NAME)
-
-activate:
-	@echo "Run 'source $(VENV_NAME)/bin/activate' to activate the virtual environment"
+pyenv:
+	pyenv virtualenv 3.12.6 ${VENV_NAME}
 
 requirements:
-	$(VENV_NAME)/bin/pip install -r requirements.txt
-
-run:
-	python3 code/london_prem_analysis.py
+	pip install -r requirements.txt
 
 airflow_ui:
 	open http://localhost:8080
@@ -21,3 +15,9 @@ deploy_dag:
 	cp code/config.py ~/airflow/dags/
 	cp code/models/* ~/airflow/dags/models/
 	cp credentials/* ~/airflow/dags/models
+
+format:
+	black code/
+
+lint: 
+	flake8 code/
