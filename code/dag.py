@@ -5,6 +5,7 @@ from models.refresh_game_urls import refresh_game_urls
 from models.validate_game_numbers import validate_game_numbers
 from models.refresh_data import refresh_data
 from models.refresh_analysis import refresh_analysis
+from models.validate_analysis import validate_analysis
 from models.write_to_gsheet import write_to_gsheet
 
 default_args = {
@@ -28,6 +29,9 @@ with DAG(
     refresh_analysis = PythonOperator(
         task_id="refresh_analysis", python_callable=refresh_analysis
     )
+    validate_analysis = PythonOperator(
+        task_id="validate_analysis", python_callable=validate_analysis
+    )
     write_to_gsheet = PythonOperator(
         task_id="write_to_gsheet", python_callable=write_to_gsheet
     )
@@ -37,5 +41,6 @@ with DAG(
         >> validate_game_numbers
         >> refresh_data
         >> refresh_analysis
+        >> validate_analysis
         >> write_to_gsheet
     )
