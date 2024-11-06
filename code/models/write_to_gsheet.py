@@ -72,14 +72,14 @@ def write_to_gsheet():
 
     service.spreadsheets().values().update(
         spreadsheetId=config.spreadsheet_id,
-        range="'Player View'!J3",
+        range="'Player View'!K3",
         valueInputOption="RAW",
         body={"values": [[current_datetime]]},
     ).execute()
 
     service.spreadsheets().values().update(
         spreadsheetId=config.spreadsheet_id,
-        range="'Team View'!I3",
+        range="'Team View'!K3",
         valueInputOption="RAW",
         body={"values": [[current_datetime]]},
     ).execute()

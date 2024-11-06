@@ -4,6 +4,6 @@ repos:
     hooks:
       - id: black
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0  # specify the latest Flake8 version
+    rev: 7.1.1  # specify the latest Flake8 version
     hooks:
       - id: flake8

@@ -57,7 +57,9 @@ fixtures_payload = {
 # making acronyms more readable
 mapping_dictionary = {
     "GC": "Green Card",
-    "PC": "Penalty Corner",
     "YC": "Yellow Card",
+    "RC": "Red Card",
     "FG": "Field Goal",
+    "PS": "Penalty Stroke",
+    "PC": "Penalty Corner",
 }
