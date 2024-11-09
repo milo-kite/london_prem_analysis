@@ -79,7 +79,7 @@ def write_to_gsheet():
 
     service.spreadsheets().values().update(
         spreadsheetId=config.spreadsheet_id,
-        range="'Team View'!K3",
+        range="'Team View'!L3",
         valueInputOption="RAW",
         body={"values": [[current_datetime]]},
     ).execute()

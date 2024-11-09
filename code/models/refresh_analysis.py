@@ -35,6 +35,7 @@ def refresh_analysis():
     )
     field_order = [
         "Player",
+        "Team",
         "Green Card",
         "Yellow Card",
         "Red Card",

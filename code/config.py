@@ -2,8 +2,8 @@ import pandas as pd
 from datetime import date
 import os
 
-email = "your@email.com"
-password = "your_password"
+email = "milokite@gmail.com"
+password = "rubymilo36"
 
 # pandas display options
 pd.set_option("display.max_rows", 100)
@@ -19,7 +19,7 @@ analysed_player_filename = "analysed_player_data"
 analysed_team_filename = "analysed_team_data"
 competition_index_key = "6E0F8F4C7D5C2E7D1E"
 today = date.today().strftime("%d-%m-%Y")
-spreadsheet_id = "spreadsheet_id"
+spreadsheet_id = "1IHOrgZOUIiJx63XYWbFb2e1ERBgIP9RrKpwhDWEPHsk"
 
 # urls needed to read and write data
 login_url = r"https://secure.whostheumpire.com/db_admin/index.php?login=Y"
