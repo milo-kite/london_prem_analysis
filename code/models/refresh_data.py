@@ -11,6 +11,7 @@ def refresh_data():
     player = []
     action = []
     team = []
+    other_team = []
     game_id = []
 
     with requests.session() as s:
@@ -50,9 +51,11 @@ def refresh_data():
                     if len(split_data) == 2:
                         row_player, row_type = split_data
                         team.append(home_team)
+                        other_team.append(away_team)
                     elif len(split_data) == 3:
                         row_player, _, row_type = split_data
                         team.append(away_team)
+                        other_team.append(home_team)
 
                     player.append(row_player)
                     action.append(row_type)
@@ -64,6 +67,7 @@ def refresh_data():
             "Player": player,
             "type": action,
             "Team": team,
+            "Other Team": other_team,
             "game_id": game_id,
         }
     )

@@ -59,20 +59,79 @@ def refresh_analysis():
         .fillna(0)
         .astype(int)
     )
-    team_data["Total Goals"] = (
-        team_data["Field Goal"]
-        + team_data["Penalty Corner"]
-        + team_data["Penalty Stroke"]
+
+    # renaming fields
+    rename_dictionary = {
+        "Green Card": "Green Card Conceded",
+        "Yellow Card": "Yellow Card Conceded",
+        "Red Card": "Red Card Conceded",
+        "Penalty Stroke": "Penalty Stroke Scored",
+        "Penalty Corner": "Penalty Corner Scored",
+        "Field Goal": "Field Goal Scored",
+    }
+    team_data = team_data.rename(columns=rename_dictionary)
+
+    team_data["Total Goals Scored"] = (
+        team_data["Field Goal Scored"]
+        + team_data["Penalty Corner Scored"]
+        + team_data["Penalty Stroke Scored"]
     )
-    team_data = team_data.sort_values("Total Goals", ascending=False)
+    team_data = team_data.sort_values("Total Goals Scored", ascending=False)
+
+    print("Team data is:")
+    print(team_data.head(100))
+
+    other_team_data = league_data.groupby(["type", "Other Team"]).count()
+    other_team_data = (
+        pd.pivot_table(
+            other_team_data, index="Other Team", columns="type", values="weighting"
+        )
+        .reindex(columns=expected_types, fill_value=0)
+        .fillna(0)
+        .astype(int)
+    )
+    rename_dictionary = {
+        "Green Card": "Green Card Drawn",
+        "Yellow Card": "Yellow Card Drawn",
+        "Red Card": "Red Card Drawn",
+        "Penalty Stroke": "Penalty Stroke Conceded",
+        "Penalty Corner": "Penalty Corner Conceded",
+        "Field Goal": "Field Goal Conceded",
+    }
+    other_team_data = other_team_data.rename(columns=rename_dictionary)
+    other_team_data["Total Goals Conceded"] = (
+        other_team_data["Field Goal Conceded"]
+        + other_team_data["Penalty Corner Conceded"]
+        + other_team_data["Penalty Stroke Conceded"]
+    )
+    print("Other team data is:")
+    print(other_team_data.head(100))
+
+    full_team_data = pd.merge(
+        team_data, other_team_data, left_index=True, right_index=True, how="left"
+    )
+    print("Full team data columns is:")
+    print(full_team_data.columns)
     field_order = [
-        "Green Card",
-        "Yellow Card",
-        "Red Card",
-        "Penalty Stroke",
-        "Penalty Corner",
-        "Field Goal",
-        "Total Goals",
+        "Green Card Conceded",
+        "Yellow Card Conceded",
+        "Red Card Conceded",
+        "Penalty Stroke Conceded",
+        "Penalty Corner Conceded",
+        "Field Goal Conceded",
+        "Total Goals Conceded",
+        "Green Card Drawn",
+        "Yellow Card Drawn",
+        "Red Card Drawn",
+        "Penalty Stroke Scored",
+        "Penalty Corner Scored",
+        "Field Goal Scored",
+        "Total Goals Scored",
     ]
-    team_data = team_data[field_order]
-    team_data.to_csv(config.local_storage + config.analysed_team_filename + ".csv")
+
+    full_team_data = full_team_data[field_order]
+
+    print("Full team data is:")
+    print(full_team_data.head(100))
+
+    full_team_data.to_csv(config.local_storage + config.analysed_team_filename + ".csv")

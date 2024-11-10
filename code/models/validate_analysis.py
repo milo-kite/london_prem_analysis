@@ -27,7 +27,7 @@ def validate_analysis():
             calculated_goals_scored = int(entries[7].text)
 
             official_goals_scored = int(
-                team_data[team_data["Team"] == club]["Total Goals"].values[0]
+                team_data[team_data["Team"] == club]["Total Goals Scored"].values[0]
             )
 
             if official_goals_scored != calculated_goals_scored:
