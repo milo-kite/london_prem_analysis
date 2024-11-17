@@ -8,7 +8,7 @@ import config
 
 def validate_analysis():
     day_of_week = datetime.now().strftime("%A")
-    if day_of_week != "Saturday":
+    if day_of_week == "Monday":
         # reading goals scored from hockeyfixtures
         print("Validating that all goals have been extracted")
         r = requests.get(config.hockey_fixtures_url)
@@ -38,5 +38,5 @@ def validate_analysis():
 
         print("Goals scored has been validated")
     else:
-        print("Skipping goals scored validation since it's a Saturday")
+        print("Skipping goals scored validation since it's not a Monday")
     return None

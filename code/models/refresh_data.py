@@ -77,3 +77,54 @@ def refresh_data():
 
     # writing to local storage
     df.to_csv(config.local_storage + config.raw_data + ".csv", index=False)
+
+    print("Searching for team's schedule")
+    r = s.post(config.fixtures_search, data=config.schedule_payload)
+
+    # structure html and find table containing game ids
+    if r.status_code == 200:
+        soup = BeautifulSoup(r.text, "html.parser")
+        table = soup.find("table", {"id": "queryResultsTable_2"})
+    else:
+        raise Exception(
+            f"Unable to refresh game urls. Status code {r.status_code} returned"
+        )
+
+    print("Extracting fixtures")
+    # extract fixtures
+
+    game_dates = []
+    home_teams = []
+    away_teams = []
+    if table:
+        for row in table.find_all("tr"):
+            row = row.find_all("td", {"class": "view_list_data"})
+            print("row")
+            print(row)
+            game_date = [
+                span.text
+                for r in row
+                for span in r.find_all("span")
+                if span.get("title")
+            ]
+            if game_date:
+                home_team = row[6].find("a").get_text(strip=True)
+                away_team = row[5].find("a").get_text(strip=True)
+
+                game_dates.append(game_date[0])
+                home_teams.append(home_team)
+                away_teams.append(away_team)
+    else:
+        raise ValueError("No table found :(")
+
+    schedule_df = pd.DataFrame(
+        {
+            "Date": game_dates,
+            "Home": home_teams,
+            "Away": away_teams,
+        }
+    )
+
+    schedule_df.to_csv(
+        config.local_storage + config.schedule_data + ".csv", index=False
+    )

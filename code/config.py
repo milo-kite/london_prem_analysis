@@ -14,10 +14,13 @@ pd.set_option("display.width", 300)
 current_directory = os.getcwd()
 local_storage = current_directory + r"/data/ones/"
 game_id_filename = "game_ids"
+schedule_filename = "schedule_ids"
 raw_data = "thd_data"
+schedule_data = "schedule_data"
 analysed_player_filename = "analysed_player_data"
 analysed_team_filename = "analysed_team_data"
 competition_index_key = "6E0F8F4C7D5C2E7D1E"
+team_index_key = "8F5B2D7A8C1B9F0C7F"
 today = date.today().strftime("%d-%m-%Y")
 spreadsheet_id = "1IHOrgZOUIiJx63XYWbFb2e1ERBgIP9RrKpwhDWEPHsk"
 
@@ -47,6 +50,22 @@ fixtures_payload = {
     "find_fixture_status": 0,
     "find_level": "*",
     "find_to_date": today,
+    "find_competition_index_key": competition_index_key,
+    "find_venue_index_key": 0,
+    "find_organisation_index_key": 0,
+    "find_gender": "E",
+    "find": "go",
+}
+
+schedule_payload = {
+    "clicked_find_counter": 0,
+    "find_from_date": "01-09-2024",
+    "find_team_index_key": team_index_key,
+    "find_month": 0,
+    "find_dow": 0,
+    "find_fixture_status": 0,
+    "find_level": "*",
+    "find_to_date": "01-09-2025",
     "find_competition_index_key": competition_index_key,
     "find_venue_index_key": 0,
     "find_organisation_index_key": 0,

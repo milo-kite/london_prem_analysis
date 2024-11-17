@@ -8,7 +8,7 @@ import config
 
 def validate_game_numbers():
     day_of_week = datetime.now().strftime("%A")
-    if day_of_week != "Saturday":
+    if day_of_week == "Monday":
         total_games = 0
 
         print("Validating that all games from gms have been extracted")
@@ -33,5 +33,5 @@ def validate_game_numbers():
                 f" and {len(game_urls)} extracted from gms"
             )
     else:
-        print("Skipping game numbers validation since it's a Saturday")
+        print("Skipping game numbers validation since it's not a Monday")
     return None

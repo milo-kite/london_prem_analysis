@@ -5,6 +5,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 import csv
 from datetime import datetime
+import pandas as pd
 
 import config
 
@@ -68,5 +69,101 @@ def write_to_gsheet():
     current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     write_values(service, [[current_datetime]], "'Player View'!L3")
     write_values(service, [[current_datetime]], "'Team View'!R3")
+
+    # find the next team THD are playing
+    schedule = pd.read_csv(config.local_storage + config.schedule_data + ".csv")
+    schedule["Date"] = pd.to_datetime(schedule["Date"], format="%d-%m-%Y")
+    today = datetime.today()
+    teams = list(schedule[schedule["Date"] >= today].sort_values(by="Date").iloc[0])[1:]
+    next_game = list(filter(lambda team: team != "Tulse Hill & Dulwich M1", teams))[0]
+
+    # highlighting players from next game
+    format_requests = []
+    rows = [i for i, row in enumerate(player_stats) if row[1] == next_game]
+
+    # clearing colour
+    clear_format_request = {
+        "requests": [
+            {
+                "updateCells": {
+                    "range": {
+                        "sheetId": 1476248146,
+                        "startRowIndex": 1,
+                        "endRowIndex": 200,
+                        "startColumnIndex": 0,
+                        "endColumnIndex": 9,
+                    },
+                    "rows": [
+                        {
+                            "values": [
+                                {
+                                    "userEnteredFormat": {
+                                        "backgroundColor": {
+                                            "red": 1.0,
+                                            "green": 1.0,
+                                            "blue": 1.0,
+                                        }
+                                    }
+                                }
+                                for _ in range(9)
+                            ]
+                        }
+                        for _ in range(199)
+                    ],
+                    "fields": "userEnteredFormat(backgroundColor)",
+                }
+            }
+        ]
+    }
+
+    # Send the request to the API
+    service.spreadsheets().batchUpdate(
+        spreadsheetId=config.spreadsheet_id, body=clear_format_request
+    ).execute()
+
+    for row in rows:
+        request = {
+            "updateCells": {
+                "range": {
+                    "sheetId": 1476248146,
+                    "startRowIndex": row,
+                    "endRowIndex": row + 1,
+                    "startColumnIndex": 0,
+                    "endColumnIndex": 9,
+                },
+                "rows": [
+                    {
+                        "values": [
+                            {
+                                "userEnteredFormat": {
+                                    "backgroundColor": {
+                                        "red": 1.0,
+                                        "green": 1.0,
+                                        "blue": 0.6,
+                                    },
+                                    "textFormat": {
+                                        "foregroundColor": {
+                                            "red": 0,
+                                            "green": 0,
+                                            "blue": 0,
+                                        }
+                                    },
+                                }
+                            }
+                            for _ in range(9)
+                        ]
+                    }
+                ],
+                "fields": "userEnteredFormat(backgroundColor, textFormat)",
+            }
+        }
+
+        format_requests.append(request)
+
+    print(format_requests)
+
+    service.spreadsheets().batchUpdate(
+        spreadsheetId=config.spreadsheet_id, body={"requests": format_requests}
+    ).execute()
 
     return None

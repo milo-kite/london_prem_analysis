@@ -10,6 +10,8 @@ airflow_ui:
 	open http://localhost:8080
 
 deploy_dag:
+	make format
+	make lint
 	mkdir -p ~/airflow/dags/models
 	cp code/dag.py ~/airflow/dags/
 	cp code/config.py ~/airflow/dags/

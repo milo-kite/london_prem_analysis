@@ -78,9 +78,6 @@ def refresh_analysis():
     )
     team_data = team_data.sort_values("Total Goals Scored", ascending=False)
 
-    print("Team data is:")
-    print(team_data.head(100))
-
     other_team_data = league_data.groupby(["type", "Other Team"]).count()
     other_team_data = (
         pd.pivot_table(
@@ -104,8 +101,6 @@ def refresh_analysis():
         + other_team_data["Penalty Corner Conceded"]
         + other_team_data["Penalty Stroke Conceded"]
     )
-    print("Other team data is:")
-    print(other_team_data.head(100))
 
     full_team_data = pd.merge(
         team_data, other_team_data, left_index=True, right_index=True, how="left"
