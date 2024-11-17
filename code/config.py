@@ -2,8 +2,8 @@ import pandas as pd
 from datetime import date
 import os
 
-email = "milokite@gmail.com"
-password = "rubymilo36"
+email = None
+password = None
 
 # pandas display options
 pd.set_option("display.max_rows", 100)
