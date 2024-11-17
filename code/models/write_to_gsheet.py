@@ -6,8 +6,29 @@ from googleapiclient.discovery import build
 import csv
 from datetime import datetime
 
-# contains your login details
 import config
+
+
+def write_values(service, file, starting_cell):
+    body = {"values": file}
+    service.spreadsheets().values().update(
+        spreadsheetId=config.spreadsheet_id,
+        range=starting_cell,
+        valueInputOption="RAW",
+        body=body,
+    ).execute()
+
+
+def read_csv(filename):
+    with open(
+        config.local_storage + filename + ".csv",
+        mode="r",
+        newline="",
+        encoding="utf-8",
+    ) as csvfile:
+        reader = csv.reader(csvfile)
+        file = list(reader)
+    return file
 
 
 def write_to_gsheet():
@@ -35,53 +56,17 @@ def write_to_gsheet():
 
     service = build("sheets", "v4", credentials=credentials)
 
-    with open(
-        config.local_storage + config.analysed_team_filename + ".csv",
-        mode="r",
-        newline="",
-        encoding="utf-8",
-    ) as csvfile:
-        reader = csv.reader(csvfile)
-        team_stats = list(reader)
+    # writing team stats to GSheet
+    team_stats = read_csv(config.analysed_team_filename)
+    write_values(service, team_stats, "'Team View'!A1")
 
-    body = {"values": team_stats}
-    service.spreadsheets().values().update(
-        spreadsheetId=config.spreadsheet_id,
-        range="'Team View'!A1",
-        valueInputOption="RAW",
-        body=body,
-    ).execute()
+    # writing player stats to GSheet
+    player_stats = read_csv(config.analysed_player_filename)
+    write_values(service, player_stats, "'Player View'!A1")
 
-    with open(
-        config.local_storage + config.analysed_player_filename + ".csv",
-        mode="r",
-        newline="",
-        encoding="utf-8",
-    ) as csvfile:
-        reader = csv.reader(csvfile)
-        player_stats = list(reader)
-
-    body = {"values": player_stats}
-    service.spreadsheets().values().update(
-        spreadsheetId=config.spreadsheet_id,
-        range="'Player View'!A1",
-        valueInputOption="RAW",
-        body=body,
-    ).execute()
+    # writing last updated time to GSheet
     current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    service.spreadsheets().values().update(
-        spreadsheetId=config.spreadsheet_id,
-        range="'Player View'!L3",
-        valueInputOption="RAW",
-        body={"values": [[current_datetime]]},
-    ).execute()
-
-    service.spreadsheets().values().update(
-        spreadsheetId=config.spreadsheet_id,
-        range="'Team View'!R3",
-        valueInputOption="RAW",
-        body={"values": [[current_datetime]]},
-    ).execute()
+    write_values(service, [[current_datetime]], "'Player View'!L3")
+    write_values(service, [[current_datetime]], "'Team View'!R3")
 
     return None

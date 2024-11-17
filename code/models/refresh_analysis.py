@@ -110,8 +110,6 @@ def refresh_analysis():
     full_team_data = pd.merge(
         team_data, other_team_data, left_index=True, right_index=True, how="left"
     )
-    print("Full team data columns is:")
-    print(full_team_data.columns)
     field_order = [
         "Green Card Conceded",
         "Yellow Card Conceded",
@@ -130,8 +128,5 @@ def refresh_analysis():
     ]
 
     full_team_data = full_team_data[field_order]
-
-    print("Full team data is:")
-    print(full_team_data.head(100))
 
     full_team_data.to_csv(config.local_storage + config.analysed_team_filename + ".csv")
