@@ -19,7 +19,7 @@ deploy_dag:
 	cp credentials/* ~/airflow/dags/models
 
 format:
-	black code/
+	black code/ credentials/
 
 lint: 
 	flake8 code/

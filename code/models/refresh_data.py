@@ -99,8 +99,6 @@ def refresh_data():
     if table:
         for row in table.find_all("tr"):
             row = row.find_all("td", {"class": "view_list_data"})
-            print("row")
-            print(row)
             game_date = [
                 span.text
                 for r in row

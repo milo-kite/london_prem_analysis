@@ -73,7 +73,8 @@ def write_to_gsheet():
     # find the next team THD are playing
     schedule = pd.read_csv(config.local_storage + config.schedule_data + ".csv")
     schedule["Date"] = pd.to_datetime(schedule["Date"], format="%d-%m-%Y")
-    today = datetime.today()
+    now = datetime.today()
+    today = datetime(now.year, now.month, now.day)
     teams = list(schedule[schedule["Date"] >= today].sort_values(by="Date").iloc[0])[1:]
     next_game = list(filter(lambda team: team != "Tulse Hill & Dulwich M1", teams))[0]
 

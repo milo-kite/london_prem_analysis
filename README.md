@@ -13,11 +13,20 @@ This table produces summary statistics at the team level. It can be used to scou
 | Field | Description | Type |
 |-------|-------------|------|
 | Team | Team Name | String |
-| Field Goal | Total open play goals | Integer |
-| Green Card | Total green cards | Integer |
-| Penalty Corner | Total penalty corner goals | Integer |
-| Yellow Card | Total yellow cards | Integer |
-| Goals | Total goals | Integer |
+| Green Card Conceded | Total green cards conceded | Integer |
+| Yellow Card Conceded | Total yellow cards conceded | Integer |
+| Red Card Conceded | Total red cards conceded | Integer |
+| Penalty Stroke Conceded | Total penalty stroke goals conceded | Integer |
+| Penalty Corner Conceded | Total penalty corner goals conceded | Integer |
+| Field Goal Conceded | Total open play goals conceded | Integer |
+| Total Goals Conceded | Total goals conceded | Integer |
+| Green Card Drawn | Total green cards drawn | Integer |
+| Yellow Card Drawn | Total yellow cards drawn | Integer |
+| Red Card Drawn | Total red cards drawn | Integer |
+| Penalty Stroke Scored | Total penalty stroke goals scored | Integer |
+| Penalty Corner Scored | Total penalty corner goals scored | Integer |
+| Field Goal Scored | Total open play goals scored | Integer |
+| Total Goals Scored | Total goals scored | Integer |
 
 ### Player View
 
@@ -27,10 +36,13 @@ This table produces summary statistics at the player level. It can be used to sc
 |-------|-------------|------|
 | Player | Player Name | String |
 | Team | Team Name | String |
-| Field Goal | Total open play goals | Integer |
 | Green Card | Total green cards | Integer |
-| Yellow Corner | Total yellow cards | Integer |
-| Goals | Total goals | Integer |
+| Yellow Card | Total yellow cards | Integer |
+| Red Card | Total red cards | Integer |
+| Penalty Stroke | Total penalty strokes | Integer |
+| Penalty Corner | Total penalty corners | Integer |
+| Field Goal | Total open play goals | Integer |
+| Total Goals | Total goals | Integer |
 
 ## Set-up
 
