@@ -6,3 +6,6 @@ code/config.py
 data/*
 credentials/*
 .DS_Store
+build-context.tar
+log.txt
+code/models/__pycache__/config.cpython-312.pyc

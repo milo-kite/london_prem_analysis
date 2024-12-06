@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
@@ -11,12 +13,14 @@ from models.write_to_gsheet import write_to_gsheet
 default_args = {
     "owner": "airflow",
     "start_date": datetime(2024, 11, 1),
+    "retries": 3,
+    "retry_delay": timedelta(minutes=5),
 }
 
 with DAG(
     "london_prem_analysis",
     default_args=default_args,
-    schedule_interval="0 * * * 6,7",
+    schedule_interval="0 0 * * *",
     catchup=False,
 ) as dag:
     refresh_game_urls = PythonOperator(

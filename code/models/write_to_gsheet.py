@@ -46,8 +46,10 @@ def write_to_gsheet():
 
     if not credentials or not credentials.valid:
         if credentials and credentials.expired and credentials.refresh_token:
+            print("Refreshing credentials")
             credentials.refresh(Request())
         else:
+            print("Using existing credentials")
             flow = InstalledAppFlow.from_client_secrets_file(
                 "credentials/gsheet_oauth_budget.json", scopes
             )
@@ -63,12 +65,13 @@ def write_to_gsheet():
 
     # writing player stats to GSheet
     player_stats = read_csv(config.analysed_player_filename)
+    player_stats = read_csv(config.analysed_player_filename)
     write_values(service, player_stats, "'Player View'!A1")
 
     # writing last updated time to GSheet
     current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     write_values(service, [[current_datetime]], "'Player View'!L3")
-    write_values(service, [[current_datetime]], "'Team View'!R3")
+    write_values(service, [[current_datetime]], "'Team View'!S3")
 
     # find the next team THD are playing
     schedule = pd.read_csv(config.local_storage + config.schedule_data + ".csv")
@@ -88,7 +91,7 @@ def write_to_gsheet():
             {
                 "updateCells": {
                     "range": {
-                        "sheetId": 1476248146,
+                        "sheetId": config.sheet_id,
                         "startRowIndex": 1,
                         "endRowIndex": 200,
                         "startColumnIndex": 0,
@@ -126,7 +129,7 @@ def write_to_gsheet():
         request = {
             "updateCells": {
                 "range": {
-                    "sheetId": 1476248146,
+                    "sheetId": config.sheet_id,
                     "startRowIndex": row,
                     "endRowIndex": row + 1,
                     "startColumnIndex": 0,

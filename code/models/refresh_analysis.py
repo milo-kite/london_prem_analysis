@@ -76,7 +76,6 @@ def refresh_analysis():
         + team_data["Penalty Corner Scored"]
         + team_data["Penalty Stroke Scored"]
     )
-    team_data = team_data.sort_values("Total Goals Scored", ascending=False)
 
     other_team_data = league_data.groupby(["type", "Other Team"]).count()
     other_team_data = (
@@ -105,6 +104,12 @@ def refresh_analysis():
     full_team_data = pd.merge(
         team_data, other_team_data, left_index=True, right_index=True, how="left"
     )
+
+    full_team_data["Goal Difference"] = (
+        full_team_data["Total Goals Scored"] - full_team_data["Total Goals Conceded"]
+    )
+    full_team_data = full_team_data.sort_values("Goal Difference", ascending=False)
+
     field_order = [
         "Green Card Conceded",
         "Yellow Card Conceded",
@@ -120,6 +125,7 @@ def refresh_analysis():
         "Penalty Corner Scored",
         "Field Goal Scored",
         "Total Goals Scored",
+        "Goal Difference",
     ]
 
     full_team_data = full_team_data[field_order]

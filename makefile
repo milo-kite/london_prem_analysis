@@ -23,3 +23,26 @@ format:
 
 lint: 
 	flake8 code/
+
+docker_image:
+	docker build --no-cache -t my-airflow-job:latest .
+
+docker_init:
+	docker run --rm my-airflow-job:latest db init
+
+docker_down:
+	docker-compose down
+
+docker_up:
+	docker-compose up -d
+
+kill_webserver:
+	kill -9 36504
+
+webserver:
+	docker exec -it airflow-webserver /bin/bash
+
+deploy:
+	make docker_image
+	make docker_down
+	make docker_up

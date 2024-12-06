@@ -12,7 +12,7 @@ pd.set_option("display.width", 300)
 
 # run configurations, replace with your username
 current_directory = os.getcwd()
-local_storage = current_directory + r"/data/ones/"
+local_storage = current_directory + r"/data/"
 game_id_filename = "game_ids"
 schedule_filename = "schedule_ids"
 raw_data = "thd_data"
@@ -23,6 +23,7 @@ competition_index_key = "6E0F8F4C7D5C2E7D1E"
 team_index_key = "8F5B2D7A8C1B9F0C7F"
 today = date.today().strftime("%d-%m-%Y")
 spreadsheet_id = "1IHOrgZOUIiJx63XYWbFb2e1ERBgIP9RrKpwhDWEPHsk"
+sheet_id = 1476248146
 
 # urls needed to read and write data
 login_url = r"https://secure.whostheumpire.com/db_admin/index.php?login=Y"
@@ -55,6 +56,7 @@ fixtures_payload = {
     "find_organisation_index_key": 0,
     "find_gender": "E",
     "find": "go",
+    "limit_start": 0,
 }
 
 schedule_payload = {
