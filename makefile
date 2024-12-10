@@ -36,9 +36,6 @@ docker_down:
 docker_up:
 	docker-compose up -d
 
-kill_webserver:
-	kill -9 36504
-
 webserver:
 	docker exec -it airflow-webserver /bin/bash
 

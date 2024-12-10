@@ -11,14 +11,10 @@ COPY requirements.txt /opt/airflow/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the code directory (including your DAGs, scripts, etc.) into the container
-
 COPY code/* /opt/airflow/dags
-
 RUN mkdir -p /opt/airflow/credentials
 COPY credentials/* /opt/airflow/credentials
-
 RUN mkdir -p /opt/airflow/data
-
 RUN ls -al /opt/airflow/credentials
 
 # Set the Airflow home directory (if you want to change it)
