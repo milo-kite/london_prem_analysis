@@ -56,29 +56,28 @@ This setup works for UNIX like operating systems. This setup assumes you have:
 
 ### GSheet API
 
-To write to a GSheet you need to run an app that calls a Google Workspace API. To set this up we'll be following this [setup guide](https://developers.google.com/sheets/api/quickstart/python)
-
-Follow this [guide](https://support.google.com/a/answer/7378726?hl=en) to create your service account. Turn on the GSheets API. Make sure to save your key locally as `service_account_key.json`.
+To write to a GSheet you need to run an app that calls a Google Workspace API. To set this up we'll be following this [guide](https://support.google.com/a/answer/7378726?hl=en) to create your service account. Turn on the GSheets API. Make sure to save your key locally as `service_account_key.json`.
 
 ### GSheet
 
 1. Go to [GSheets](https://docs.google.com/spreadsheets/u/0/) in your browser
 2. Make two tabs called `Team View` and `Player View`
-3. Note the `spreadsheet_id` in the URL (it's the characters after `/d/` and before `/edit/`)
+3. Note the `sheet_id` of your second tab in the URL (it's the characters after `gid=`)
+4. Note the `spreadsheet_id` in the URL (it's the characters after `/d/` and before `/edit/`)
 
-### Find your Competition Index Key
+### Find your  & Team Index Key
 
 This is the identifier for your league in "whostheumpire". It's a bit fiddly. I recommend using Chrome as your browser for this.
 
 1. Login on [whostheumpire](https://secure.whostheumpire.com/db_admin/index.php?login=Y)
 2. Go to [Fixtures Search](https://secure.whostheumpire.com/db_admin/fixtures.php?function=view)
-3. Change the Competition dropdown to your league
+3. Change the Competition dropdown to your league and team dropdown to your team
 4. Right-hand click and open up Inspect
 5. Go to the Network tab
 6. Search for the fixtures in your browser by hitting Find
 7. Click on the event entitled fixtures.php?function=view
 8. Go to Payload
-9. Note the value under Form Data next to `find_competition_index_key`. It should be a random string of numbers and letters from A->F.
+9. Note the values under Form Data next to `find_competition_index_key` and `find_team_index_key`. They should be a random string of numbers and letters from A->F.
 
 ### Credentials
 
@@ -86,7 +85,9 @@ Go to `config.py` and update:
 - email for whostheumpire
 - password for whostheumpire
 - `competition_index_key`
+- `find_team_index_key`
 - `spreadsheet_id`
+- `sheet_id`
 
 ### Virtual Environment
 
