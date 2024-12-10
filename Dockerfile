@@ -12,11 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the code directory (including your DAGs, scripts, etc.) into the container
 
-COPY code/dag.py /opt/airflow/dags/dag.py
-COPY code/config.py /opt/airflow/dags/config.py
-
-RUN mkdir -p /opt/airflow/dags/models
-COPY code/models/* /opt/airflow/dags/models/
+COPY code/* /opt/airflow/dags
 
 RUN mkdir -p /opt/airflow/credentials
 COPY credentials/* /opt/airflow/credentials

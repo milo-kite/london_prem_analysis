@@ -3,18 +3,18 @@ from datetime import timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
-from models.refresh_game_urls import refresh_game_urls
-from models.validate_game_numbers import validate_game_numbers
-from models.refresh_data import refresh_data
-from models.refresh_analysis import refresh_analysis
-from models.validate_analysis import validate_analysis
-from models.write_to_gsheet import write_to_gsheet
+from refresh_game_urls import refresh_game_urls
+from validate_game_numbers import validate_game_numbers
+from refresh_data import refresh_data
+from refresh_analysis import refresh_analysis
+from validate_analysis import validate_analysis
+from write_to_gsheet import write_to_gsheet
 
 default_args = {
     "owner": "airflow",
     "start_date": datetime(2024, 11, 1),
     "retries": 3,
-    "retry_delay": timedelta(minutes=5),
+    "retry_delay": timedelta(seconds=15),
 }
 
 with DAG(

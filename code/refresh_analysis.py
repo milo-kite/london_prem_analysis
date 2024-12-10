@@ -131,3 +131,7 @@ def refresh_analysis():
     full_team_data = full_team_data[field_order]
 
     full_team_data.to_csv(config.local_storage + config.analysed_team_filename + ".csv")
+
+
+if __name__ == "__main__":
+    refresh_analysis()

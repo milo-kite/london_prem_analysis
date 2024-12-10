@@ -53,3 +53,7 @@ def refresh_game_urls():
             outfile.write(json_game_urls)
 
     return None
+
+
+if __name__ == "__main__":
+    refresh_game_urls()

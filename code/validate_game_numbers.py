@@ -35,3 +35,7 @@ def validate_game_numbers():
     else:
         print("Skipping game numbers validation since it's not a Monday")
     return None
+
+
+if __name__ == "__main__":
+    validate_game_numbers()

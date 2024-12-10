@@ -126,3 +126,7 @@ def refresh_data():
     schedule_df.to_csv(
         config.local_storage + config.schedule_data + ".csv", index=False
     )
+
+
+if __name__ == "__main__":
+    refresh_data()

@@ -1,7 +1,4 @@
-import os
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
+from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import csv
 from datetime import datetime
@@ -37,25 +34,9 @@ def write_to_gsheet():
     print("Writing to GSheet")
     scopes = ["https://www.googleapis.com/auth/spreadsheets"]
 
-    credentials = None
-    if os.path.exists("credentials/token.json"):
-        # giving authorisation to gsheets
-        credentials = Credentials.from_authorized_user_file(
-            "credentials/token.json", scopes
-        )
-
-    if not credentials or not credentials.valid:
-        if credentials and credentials.expired and credentials.refresh_token:
-            print("Refreshing credentials")
-            credentials.refresh(Request())
-        else:
-            print("Using existing credentials")
-            flow = InstalledAppFlow.from_client_secrets_file(
-                "credentials/gsheet_oauth_budget.json", scopes
-            )
-            credentials = flow.run_local_server(port=0)
-        with open("credentials/token.json", "w") as token:
-            token.write(credentials.to_json())
+    credentials = service_account.Credentials.from_service_account_file(
+        "credentials/service_account_key.json", scopes=scopes
+    )
 
     service = build("sheets", "v4", credentials=credentials)
 
@@ -164,10 +145,12 @@ def write_to_gsheet():
 
         format_requests.append(request)
 
-    print(format_requests)
-
     service.spreadsheets().batchUpdate(
         spreadsheetId=config.spreadsheet_id, body={"requests": format_requests}
     ).execute()
 
     return None
+
+
+if __name__ == "__main__":
+    write_to_gsheet()

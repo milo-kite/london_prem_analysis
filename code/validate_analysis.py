@@ -40,3 +40,7 @@ def validate_analysis():
     else:
         print("Skipping goals scored validation since it's not a Monday")
     return None
+
+
+if __name__ == "__main__":
+    validate_analysis()

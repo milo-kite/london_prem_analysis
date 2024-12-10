@@ -42,7 +42,18 @@ kill_webserver:
 webserver:
 	docker exec -it airflow-webserver /bin/bash
 
+scheduler:
+	docker exec -it airflow-scheduler /bin/bash
+
 deploy:
 	make docker_image
 	make docker_down
 	make docker_up
+
+run:
+	python code/refresh_game_urls.py
+	python code/validate_game_numbers.py
+	python code/refresh_data.py
+	python code/refresh_analysis.py
+	python code/validate_analysis.py
+	python code/write_to_gsheet.py
